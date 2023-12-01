@@ -343,9 +343,13 @@ prep_results_winner_final = prep_results_winner_final[result_col_order]
 
 # Tab 1
 print(prep_results_winner_final)
+prep_results_winner_final.to_csv('outputs/tab1_prep_results_winner_final.csv',index=False)
 
 # Tab 2
 print(team_tracker_results)
+team_tracker_results.to_csv('outputs/tab2_team_tracker_results.csv',index=False)
 
 # Tab 3
 print(ou_picks_for_tab)
+ou_picks_for_tab.to_csv('outputs/tab3_ou_picks_for_tab.csv',index=False)
+
