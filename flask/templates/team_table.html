@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
+
+      function drawTable() {
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        var json_data = new google.visualization.DataTable({{ table|safe }});
+        var patternFormat = {
+            suffix: '%',
+            fractionDigits: 1
+        }
+
+        table.draw(json_data, {showRowNumber: true, sortColumn:0, sortAscending: true, height: '100%'});
+    }
+
+    </script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
+    <meta charset="UTF-8">
+    <title>NBA-OU</title>
+</head>
+<body>
+    <header>
+        <p class="header"> NBA Over-Unders</p>
+        <p class="sub-header"> Tracking Kyle's NBA Over-Under Pool along with each NBA team's progress towards its Vegas Over-Under Line. </p>
+    </header>
+    <div class="redirect">
+        <a href="{{url_for('index')}}">O/U Standings</a>&emsp;&emsp;<a href="{{url_for('index_team_table')}}">Team Tracker</a>&emsp;&emsp;<a href="{{url_for('index_entry_table')}}">Entries</a>
+    </div>
+    <div 
+    id="table_div">
+    </div>
+    <div class="glossary">
+        <h4><i>Glossary</i></h4>
+        <ul class="glossary_list"><b>Team:</b> NBA Team</ul>
+        <ul class="glossary_list"><b>Over/Under:</b> Each team's Vegas Over/Under line.</ul>
+        <ul class="glossary_list"><b>Wins:</b> Team's current number of wins.</ul>
+        <ul class="glossary_list"><b>Losses:</b> Team's current number of losses.</ul>
+        <ul class="glossary_list"><b>Win%:</b> Team's current winning percentage. </ul>
+        <ul class="glossary_list"><b>Point Diff:</b> Team's current point differential. </ul>
+        <ul class="glossary_list"><b>Expected Wins (per Win%):</b> Based on the team's winning percentage, expected number of total wins.</ul>
+        <ul class="glossary_list"><b>Expected Wins (per Point Diff):</b>  Based on the team's point differential, expected number of total wins.</ul>
+        <ul class="glossary_list"><b>Expected O/U (per Win%):</b> Based on the team's winning percentage, Over vs. Under expected result.</ul>
+        <ul class="glossary_list"><b>Expected O/U (per Point Diff):</b> Based on the team's point differential, Over vs. Under expected result.</ul>
+    </div>
+</body>
+<footer class="footer">
+    <p>Last Updated: {{ context.update_date | safe }}</p>
+</footer>
+</html>
+
+
+
+
+
+
+
+
+

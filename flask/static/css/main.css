@@ -6,10 +6,14 @@ table {
     font-family: Arial;
     border-collapse: collapse; 
     border: 1px solid silver;
+    table-layout: fixed;
 }
 
 td, th {
     padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 tr:nth-child(even) {

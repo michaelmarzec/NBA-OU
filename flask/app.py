@@ -65,69 +65,153 @@ def main(filename='22_23_wp_final_results.csv'):
 @app.route('/', methods=['GET','POST'])
 def index():
 	df = main('tab1_prep_results_winner_final.csv')
-	# sort = request.args.get('sort', 'Team_Name')
-	# reverse = (request.args.get('direction', 'asc') == 'desc')
-	# df = df.sort_values(by=[sort], ascending=reverse)
 
 	table_description = {"Name": ("string", "Name"),
-						"Expected Correct (per Win%)": ("number", "Expected Correct (per Win%)"),
-						"Expected Correct (per Point Diff)": ("number", "Expected Correct (per Point Diff)"),
-						"Expected Bonus Points (per Win%)": ("number", "Expected Bonus Points (per Win%)"),
-						"Expected Bonus Points (per Point Diff)": ("number", "Expected Bonus Points (per Point Diff)"),
-						"Expected Total Score (Per Win%)": ("number", "Expected Total Score (Per Win%)"),
-						"Expected Total Score (Per Point Diff)": ("number", "Expected Total Score (Per Point Diff)"),
-						"Expected Result (per Win%)": ("number", "Expected Result (per Win%)"),
-						"Expected Result (per Point Diff)": ("number", "Expected Result (per Point Diff)"),
+						"Expected Competition Result (per Win%)": ("number", "Pred Result (WP)"),
+						"Expected Competition Result (per Point Diff)": ("number", "Pred Results (PD)"),
+						"Expected Correct (per Win%)": ("number", "Pred Correct (WP"),
+						"Expected Correct (per Point Diff)": ("number", "Pred Correct (PD)"),
+						"Expected Bonus Points (per Win%)": ("number", "Pred BP (WP)"),
+						"Expected Bonus Points (per Point Diff)": ("number", "Pred BP (PD)"),
+						"Expected Total Score (Per Win%)": ("number", "Pred Total (WP)"),
+						"Expected Total Score (Per Point Diff)": ("number", "Pred Total (PD)"),
 						}
 	
 	data_table = gviz_api.DataTable(table_description)
 	table_data = df.to_dict(orient='records')	
 	data_table.LoadData(table_data)
-	json_table = data_table.ToJSon(columns_order=("Name","Expected Correct (per Win%)","Expected Correct (per Point Diff)","Expected Bonus Points (per Win%)","Expected Bonus Points (per Point Diff)","Expected Total Score (Per Win%)","Expected Total Score (Per Point Diff)","Expected Result (per Win%)","Expected Result (per Point Diff)"))
+	json_table = data_table.ToJSon(columns_order=("Name","Expected Competition Result (per Win%)","Expected Competition Result (per Point Diff)","Expected Correct (per Win%)","Expected Correct (per Point Diff)","Expected Bonus Points (per Win%)","Expected Bonus Points (per Point Diff)","Expected Total Score (Per Win%)","Expected Total Score (Per Point Diff)"))
 
 	today = date.today()
 	update_date = today.strftime("%m/%d/%Y")
 
 	context = {"update_date": update_date}
 
-	return render_template('wp_table.html',  table=json_table, context=context)
+	return render_template('ou_table.html',  table=json_table, context=context)
 
 
-# @app.route('/22_23', methods=['GET','POST'])
-# def index_22_23():
-# 	df = main('22_23_wp_final_results.csv')
-# 	# sort = request.args.get('sort', 'Team_Name')
-# 	# reverse = (request.args.get('direction', 'asc') == 'desc')
-# 	# df = df.sort_values(by=[sort], ascending=reverse)
+@app.route('/team_tracking', methods=['GET','POST'])
+def index_team_table():
+	df = main('tab2_team_tracker_results.csv')
+	# sort = request.args.get('sort', 'Team_Name')
+	# reverse = (request.args.get('direction', 'asc') == 'desc')
+	# df = df.sort_values(by=[sort], ascending=reverse)
 
-# 	table_description = {"TEAM": ("string", "Team Name"),
-# 						"WT": ("number", "Winning Time %"),
-# 						"LT": ("number", "Losing Time %"),
-# 						"TIE_PC": ("number", "Tie Time %"),
-# 						"Wins": ("number", "Wins"),
-# 						"Losses": ("number", "Losses"),
-# 						"TIE_PC": ("number", "Tie Time %"),
-# 						"WP": ("number", "Win %"),
-# 						"PT_DIFF": ("number", "Point Diff"),
-# 						"EXPECTED_WIN": ("number", "Expected Wins"),
-# 						"EXPECTED_WP": ("number", "Expected Win %"),
-# 						"WT_v_WP": ("number", "Win Time % vs Win %"),
-# 						"WT_v_EXP_WP": ("number", "Win Time % vs Expected Win %")
-# 						}
+	table_description = {"TEAM": ("string", "Team"),
+						"OU Wins": ("number", "Over/Under client"),
+						"Wins": ("number", "Wins"),
+						"Losses": ("number", "Losses"),
+						"Win%": ("number", "Win%"),
+						"Point Diff": ("number", "Point Diff"),
+						"Expected Wins (per Win%)": ("number", "Expected Wins (WP)"),
+						"Expected Wins (per Point Diff)": ("number", "Expected Wins (PD)"),
+						"Expected O/U (per Win%)": ("string", "Expected O/U (WP)"),
+						"Expected O/U (per Point Diff)": ("string", "Expected O/U (PD)"),
+						}
 	
-# 	data_table = gviz_api.DataTable(table_description)
-# 	table_data = df.to_dict(orient='records')	
-# 	data_table.LoadData(table_data)
-# 	json_table = data_table.ToJSon(columns_order=("TEAM","WT","LT", "TIE_PC","Wins","Losses","WP","PT_DIFF","EXPECTED_WIN","EXPECTED_WP","WT_v_WP","WT_v_EXP_WP"))
+	data_table = gviz_api.DataTable(table_description)
+	table_data = df.to_dict(orient='records')	
+	data_table.LoadData(table_data)
+	json_table = data_table.ToJSon(columns_order=("TEAM","OU Wins","Wins","Losses","Win%","Point Diff","Expected Wins (per Win%)","Expected Wins (per Point Diff)","Expected O/U (per Win%)","Expected O/U (per Point Diff)"))
 
-# 	today = date.today()
-# 	update_date = today.strftime("%m/%d/%Y")
+	today = date.today()
+	update_date = today.strftime("%m/%d/%Y")
 
-# 	context = {"update_date": update_date}
+	context = {"update_date": update_date}
 
-# 	return render_template('wp_table_2223.html',  table=json_table, context=context)
+	return render_template('team_table.html',  table=json_table, context=context)
+
+@app.route('/entries', methods=['GET','POST'])
+def index_entry_table():
+	df = main('tab3_ou_picks_for_tab.csv')
+	# sort = request.args.get('sort', 'Team_Name')
+	# reverse = (request.args.get('direction', 'asc') == 'desc')
+	# df = df.sort_values(by=[sort], ascending=reverse)
+
+	table_description = {"Full name": ("string", "Name"),
+						"Boston Celtics": ("string","Boston Celtics"),
+						"Milwaukee Bucks": ("string","Milwaukee Bucks"),
+						"Denver Nuggets": ("string","Denver Nuggets"),
+						"Phoenix Suns": ("string","Phoenix Suns"),
+						"Cleveland Cavaliers": ("string","Cleveland Cavaliers"),
+						"Philadelphia 76ers": ("string","Philadelphia 76ers"),
+						"GS Warriors": ("string","GS Warriors"),
+						"LA Lakers": ("string","LA Lakers"),
+						"LA Clippers": ("string","LA Clippers"),
+						"Memphis Grizzlies": ("string","Memphis Grizzlies"),
+						"Miami Heat": ("string","Miami Heat"),
+						"NY Knicks": ("string","NY Knicks"),
+						"Minnesota Timberwolves": ("string","Minnesota Timberwolves"),
+						"NO Pelicans": ("string","NO Pelicans"),
+						"Sacramento Kings": ("string","Sacramento Kings"),
+						"OKC Thunder": ("string","OKC Thunder"),
+						"Dallas Mavericks": ("string","Dallas Mavericks"),
+						"Atlanta Hawks": ("string","Atlanta Hawks"),
+						"Indiana Pacers": ("string","Indiana Pacers"),
+						"BKN Nets": ("string","BKN Nets"),
+						"Chicago Bulls": ("string","Chicago Bulls"),
+						"Orlando Magic": ("string","Orlando Magic"),
+						"Toronto Raptors": ("string","Toronto Raptors"),
+						"Utah Jazz": ("string","Utah Jazz"),
+						"Houston Rockets": ("string","Houston Rockets"),
+						"Charlotte Hornets": ("string","Charlotte Hornets"),
+						"San Antonio Spurs": ("string","San Antonio Spurs"),
+						"Portland Trail Blazers": ("string","Portland Trail Blazers"),
+						"Detroit Pistons": ("string","Detroit Pistons"),
+						"Washington Wizards": ("string","Washington Wizards"),
+						"Moneyball: Big (3.5)": ("string","Moneyball: Big (3.5)"),
+						"Moneyball: 1-Small (1.5)": ("string","Moneyball: 1-Small (1.5)"),
+						"Moneyball: 2-Small (1.5)": ("string","Moneyball: 2-Small (1.5)"),
+						"Moneyball: 3-Small (1.5)": ("string","Moneyball: 3-Small (1.5)"),
+						}
+	
+	data_table = gviz_api.DataTable(table_description)
+	table_data = df.to_dict(orient='records')	
+	data_table.LoadData(table_data)
+	json_table = data_table.ToJSon(columns_order=("Full name","Boston Celtics","Milwaukee Bucks","Denver Nuggets","Phoenix Suns","Cleveland Cavaliers","Philadelphia 76ers","GS Warriors","LA Lakers","LA Clippers","Memphis Grizzlies","Miami Heat","NY Knicks","Minnesota Timberwolves","NO Pelicans","Sacramento Kings","OKC Thunder","Dallas Mavericks","Atlanta Hawks","Indiana Pacers","BKN Nets","Chicago Bulls","Orlando Magic","Toronto Raptors","Utah Jazz","Houston Rockets","Charlotte Hornets","San Antonio Spurs","Portland Trail Blazers","Detroit Pistons","Washington Wizards","Moneyball: Big (3.5)","Moneyball: 1-Small (1.5)","Moneyball: 2-Small (1.5)","Moneyball: 3-Small (1.5)"))
+
+	today = date.today()
+	update_date = today.strftime("%m/%d/%Y")
+
+	context = {"update_date": update_date}
+
+	return render_template('entry_table.html',  table=json_table, context=context)
 
 if __name__ == "__main__":
 	app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
