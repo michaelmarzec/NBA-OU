@@ -318,12 +318,12 @@ prep_results_winner_final['Expected Total Score (Per Win%)'] = prep_results_winn
 prep_results_winner_final['Expected Total Score (Per Point Diff)'] = prep_results_winner_final['Expected Correct (per Point Diff)'] + prep_results_winner_final['Expected Bonus Points (per Point Diff)']
 
 prep_results_winner_final = prep_results_winner_final.sort_values('Expected Total Score (Per Point Diff)',ascending=False).reset_index(drop=True)
-prep_results_winner_final = prep_results_winner_final.reset_index().rename(columns={'index':'Expected Result (per Point Diff)'})
-prep_results_winner_final['Expected Result (per Point Diff)'] = prep_results_winner_final['Expected Result (per Point Diff)'] + 1
+prep_results_winner_final = prep_results_winner_final.reset_index().rename(columns={'index':'Expected Competition Result (per Point Diff)'})
+prep_results_winner_final['Expected Competition Result (per Point Diff)'] = prep_results_winner_final['Expected Competition Result (per Point Diff)'] + 1
 
 prep_results_winner_final = prep_results_winner_final.sort_values('Expected Total Score (Per Win%)',ascending=False).reset_index(drop=True)
-prep_results_winner_final = prep_results_winner_final.reset_index().rename(columns={'index':'Expected Result (per Win%)'})
-prep_results_winner_final['Expected Result (per Win%)'] = prep_results_winner_final['Expected Result (per Win%)'] + 1
+prep_results_winner_final = prep_results_winner_final.reset_index().rename(columns={'index':'Expected Competition Result (per Win%)'})
+prep_results_winner_final['Expected Competition Result (per Win%)'] = prep_results_winner_final['Expected Competition Result (per Win%)'] + 1
 
 result_col_order = [
     'Name',
@@ -333,11 +333,14 @@ result_col_order = [
     'Expected Bonus Points (per Point Diff)',
     'Expected Total Score (Per Win%)',
     'Expected Total Score (Per Point Diff)',
-    'Expected Result (per Win%)',
-    'Expected Result (per Point Diff)',
+    'Expected Competition Result (per Win%)',
+    'Expected Competition Result (per Point Diff)',
 ]
 
 prep_results_winner_final = prep_results_winner_final[result_col_order]
+
+# update column in team_tracker_results
+team_tracker_results = team_tracker_results.rename(columns={'Over/Under':'OU Wins'})
 
 ## Final Outputs ##
 
