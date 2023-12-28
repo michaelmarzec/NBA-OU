@@ -12,7 +12,7 @@ import pandas as pd
 from urllib.request import urlopen
 
 
-def main(team_tracker_template, ou_picks):
+def main(team_tracker_template, ou_picks, tab1, tab2, tab3):
     html = urlopen('https://cleaningtheglass.com/stats/league/summary')
     soup = BeautifulSoup(html, 'html.parser')
     table = soup.find("table")
@@ -352,6 +352,19 @@ def main(team_tracker_template, ou_picks):
     # update column in team_tracker_results
     team_tracker_results = team_tracker_results.rename(columns={'Over/Under':'OU Wins'})
     team_tracker_results['Win%'] = team_tracker_results['Win%'].str.rstrip('%').astype('float') / 100.0
+
+    ## Final Outputs ##
+
+    # Tab 1
+    prep_results_winner_final.to_csv(tab1, index=False)
+
+    # Tab 2
+    team_tracker_results.to_csv(tab2, index=False)
+
+    # Tab 3
+    ou_picks_for_tab.to_csv(tab3, index=False)
+
+
 
 
 def lambda_handler(event, context):
