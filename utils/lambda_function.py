@@ -140,7 +140,7 @@ def main(team_tracker_template, ou_picks, tab1, tab2, tab3):
     )
 
     team_tracker_results = team_tracker_results[team_tracker_results_cols]
-    team_tracker_results.to_csv('23_24_team_tracker_results.csv')
+    # team_tracker_results.to_csv('23_24_team_tracker_results.csv')
 
     ### Tab 3 entires
     ou_picks = pd.read_csv(ou_picks)
