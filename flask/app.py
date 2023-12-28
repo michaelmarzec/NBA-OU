@@ -38,13 +38,6 @@ def aws_ingest(filename='22_23_wp_final_results.csv'):
 	csv_string = body.read().decode('utf-8')
 
 	df = pd.read_csv(StringIO(csv_string))
-	# df['WT'] = df['WT'] * 100
-	# df['LT'] = df['LT'] * 100
-	# df['TIE_PC'] = df['TIE_PC'] * 100
-	# df['WP'] = df['WP'] * 100
-	# df['EXPECTED_WP'] = df['EXPECTED_WP'] * 100
-	# df['WT_v_WP'] = df['WT_v_WP'] * 100
-	# df['WT_v_EXP_WP'] = df['WT_v_EXP_WP'] * 100
 
 	return df
 
