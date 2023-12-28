@@ -341,6 +341,7 @@ prep_results_winner_final = prep_results_winner_final[result_col_order]
 
 # update column in team_tracker_results
 team_tracker_results = team_tracker_results.rename(columns={'Over/Under':'OU Wins'})
+team_tracker_results['Win%'] = team_tracker_results['Win%'].str.rstrip('%').astype('float') / 100.0
 
 ## Final Outputs ##
 

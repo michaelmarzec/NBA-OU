@@ -31,20 +31,20 @@ def aws_ingest(filename='22_23_wp_final_results.csv'):
 	aws_secret = os.getenv("aws_secret")
 	client = boto3.client('s3', aws_access_key_id=aws_id, aws_secret_access_key=aws_secret)
 
-	bucket_name = 'nba-wp'
+	bucket_name = 'nba-ou'
 
 	csv_obj = client.get_object(Bucket=bucket_name, Key=filename)
 	body = csv_obj['Body']
 	csv_string = body.read().decode('utf-8')
 
 	df = pd.read_csv(StringIO(csv_string))
-	df['WT'] = df['WT'] * 100
-	df['LT'] = df['LT'] * 100
-	df['TIE_PC'] = df['TIE_PC'] * 100
-	df['WP'] = df['WP'] * 100
-	df['EXPECTED_WP'] = df['EXPECTED_WP'] * 100
-	df['WT_v_WP'] = df['WT_v_WP'] * 100
-	df['WT_v_EXP_WP'] = df['WT_v_EXP_WP'] * 100
+	# df['WT'] = df['WT'] * 100
+	# df['LT'] = df['LT'] * 100
+	# df['TIE_PC'] = df['TIE_PC'] * 100
+	# df['WP'] = df['WP'] * 100
+	# df['EXPECTED_WP'] = df['EXPECTED_WP'] * 100
+	# df['WT_v_WP'] = df['WT_v_WP'] * 100
+	# df['WT_v_EXP_WP'] = df['WT_v_EXP_WP'] * 100
 
 	return df
 
@@ -54,10 +54,10 @@ def aws_ingest(filename='22_23_wp_final_results.csv'):
 def main(filename='22_23_wp_final_results.csv'):
 
 	# aws process
-	# df_final = aws_ingest(filename)
+	df_final = aws_ingest(filename)
 
 	# local process
-	df_final = data_ingest(filename)
+	# df_final = data_ingest(filename)
 
 	return df_final
 
