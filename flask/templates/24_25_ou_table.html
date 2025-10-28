@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Over-Unders | O/U Standings 2023-24</title>
+    <title>NBA Over-Unders | O/U Standings 2024-25</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -41,8 +41,8 @@
             <label>Season:</label>
             <select name="season_select" onchange="location = this.value;">
                 <option value="{{url_for('index')}}">2025-26</option>
-                <option value="{{url_for('index_24_25')}}">2024-25</option>
-                <option selected="selected" value="{{url_for('index_23_24')}}">2023-24</option>
+                <option selected="selected" value="{{url_for('index_24_25')}}">2024-25</option>
+                <option value="{{url_for('index_23_24')}}">2023-24</option>
             </select>
         </div>
     </header>
