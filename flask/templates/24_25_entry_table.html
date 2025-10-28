@@ -14,7 +14,7 @@
             fractionDigits: 1
         }
 
-        table.draw(json_data, {showRowNumber: true, sortColumn:0, sortAscending: true, height: '100%'});
+        table.draw(json_data, {showRowNumber: true, sortColumn:1, sortAscending: true, height: '100%'});
     }
 
     </script>
@@ -30,9 +30,9 @@
         <div class ="year_select_nav">
         <label>Season</label>
         <select name="season_select" onchange="location = this.value;">
-            <option selected="selected" value="{{url_for('index_team_table')}}">2025-26</option>
-            <option value="{{url_for('index_team_table_24_25')}}">2024-25</option>
-            <option value="{{url_for('index_team_table_23_24')}}">2023-24</option>
+            <option value="{{url_for('index_entry_table')}}">2025-26</option>
+            <option selected="selected" value="{{url_for('index_entry_table_24_25')}}">2024-25</option>
+            <option value="{{url_for('index_entry_table_23_24')}}">2023-24</option>
         </select>
         </div>
         <br></br>
@@ -43,30 +43,9 @@
     <div 
     id="table_div">
     </div>
-    <div class="glossary">
-        <h4><i>Glossary</i></h4>
-        <ul class="glossary_list"><b>Team:</b> NBA Team</ul>
-        <ul class="glossary_list"><b>Over/Under:</b> Each team's Vegas Over/Under line.</ul>
-        <ul class="glossary_list"><b>Wins:</b> Team's current number of wins.</ul>
-        <ul class="glossary_list"><b>Losses:</b> Team's current number of losses.</ul>
-        <ul class="glossary_list"><b>Win%:</b> Team's current winning percentage. </ul>
-        <ul class="glossary_list"><b>Point Diff:</b> Team's current point differential. </ul>
-        <ul class="glossary_list"><b>Expected Wins (per Win%):</b> Based on the team's winning percentage, expected number of total wins.</ul>
-        <ul class="glossary_list"><b>Expected Wins (per Point Diff):</b>  Based on the team's point differential, expected number of total wins.</ul>
-        <ul class="glossary_list"><b>Expected O/U (per Win%):</b> Based on the team's winning percentage, Over vs. Under expected result.</ul>
-        <ul class="glossary_list"><b>Expected O/U (per Point Diff):</b> Based on the team's point differential, Over vs. Under expected result.</ul>
-    </div>
 </body>
 <footer class="footer">
     <p>Last Updated: {{ context.update_date | safe }}</p>
 </footer>
 </html>
-
-
-
-
-
-
-
-
 
