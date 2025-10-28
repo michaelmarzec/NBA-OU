@@ -122,7 +122,7 @@ def index_team_table():
 	# df = df.sort_values(by=[sort], ascending=reverse)
 
 	table_description = {"TEAM": ("string", "Team"),
-						"OU Wins": ("number", "Over/Under client"),
+						"OU Wins": ("number", "Over/Under"),
 						"Wins": ("number", "Wins"),
 						"Losses": ("number", "Losses"),
 						"Win%": ("number", "Win%"),
@@ -154,7 +154,7 @@ def index_team_table_23_24():
 	# df = df.sort_values(by=[sort], ascending=reverse)
 
 	table_description = {"TEAM": ("string", "Team"),
-						 "OU Wins": ("number", "Over/Under client"),
+						 "OU Wins": ("number", "Over/Under"),
 						 "Wins": ("number", "Wins"),
 						 "Losses": ("number", "Losses"),
 						 "Win%": ("number", "Win%"),
@@ -340,7 +340,7 @@ def index_team_table_24_25():
 	# df = df.sort_values(by=[sort], ascending=reverse)
 
 	table_description = {"TEAM": ("string", "Team"),
-						 "OU Wins": ("number", "Over/Under client"),
+						 "OU Wins": ("number", "Over/Under"),
 						 "Wins": ("number", "Wins"),
 						 "Losses": ("number", "Losses"),
 						 "Win%": ("number", "Win%"),
