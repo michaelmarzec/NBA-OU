@@ -1,76 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Over-Unders | O/U Standings 2024-25</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['table']});
-      google.charts.setOnLoadCallback(drawTable);
+{% extends "base.html" %}
 
-      function drawTable() {
-        var table = new google.visualization.Table(document.getElementById('table_div'));
-        var json_data = new google.visualization.DataTable({{ table|safe }});
-        
-        table.draw(json_data, {
-            showRowNumber: true, 
-            sortColumn: 1, 
-            sortAscending: true, 
-            height: '100%',
-            cssClassNames: {
-                headerRow: 'table-header',
-                tableRow: 'table-row',
-                oddTableRow: 'table-row-odd',
-                selectedTableRow: 'table-row-selected',
-                hoverTableRow: 'table-row-hover',
-                headerCell: 'table-header-cell',
-                tableCell: 'table-cell'
-            }
-        });
-    }
-    </script>
-</head>
-<body>
-    <header>
-        <h1 class="header">NBA Over-Unders</h1>
-        <p class="sub-header">Tracking Kyle's NBA Over-Under Pool along with each NBA team's progress towards its Vegas Over-Under Line</p>
-        <div class="year_select_nav">
-            <label>Season:</label>
-            <select name="season_select" onchange="location = this.value;">
-                <option value="{{url_for('index')}}">2025-26</option>
-                <option selected="selected" value="{{url_for('index_24_25')}}">2024-25</option>
-                <option value="{{url_for('index_23_24')}}">2023-24</option>
-            </select>
-        </div>
-    </header>
+{% block title %}NBA Over-Unders | O/U Standings 2024-25{% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
+
+  function drawTable() {
+    var table = new google.visualization.Table(document.getElementById('table_div'));
+    var json_data = new google.visualization.DataTable({{ table|safe }});
     
-    <nav class="redirect">
-        <a href="{{url_for('index')}}">O/U Standings</a>
-        <a href="{{url_for('index_team_table')}}">Team Tracker</a>
-        <a href="{{url_for('index_entry_table')}}">Entries</a>
-    </nav>
-    
-    <div id="table_div"></div>
-    
-    <section class="glossary">
-        <h4>Glossary</h4>
-        <ul>
-            <li class="glossary_list"><b>Ranking (WP):</b> Predicted final results for O/U competition based on current team win%.</li>
-            <li class="glossary_list"><b>Ranking (PD):</b> Predicted final results for O/U competition based on current point differentials.</li>
-            <li class="glossary_list"><b>Predictions (WP):</b> Predicted number of O/U predictions correct based on current team win%.</li>
-            <li class="glossary_list"><b>Predictions (PD):</b> Predicted number of O/U predictions correct based on current team point differentials.</li>
-            <li class="glossary_list"><b>Bonus Points (WP):</b> Predicted number of "Bonus" O/U predictions correct based on current team win%.</li>
-            <li class="glossary_list"><b>Bonus Points (PD):</b> Predicted number of "Bonus" O/U predictions correct based on current team point differentials.</li>
-            <li class="glossary_list"><b>Total Points (WP):</b> Predicted number of total O/U predictions correct based on current team win%.</li>
-            <li class="glossary_list"><b>Total Points (PD):</b> Predicted number of total O/U predictions correct based on current team point differentials.</li>
-        </ul>
-    </section>
-    
-    <footer class="footer">
-        <p>Last Updated: {{ context.update_date | safe }}</p>
-    </footer>
-</body>
-</html>
+    table.draw(json_data, {
+        showRowNumber: true, 
+        sortColumn: 1, 
+        sortAscending: true, 
+        height: '100%',
+        cssClassNames: {
+            headerRow: 'table-header',
+            tableRow: 'table-row',
+            oddTableRow: 'table-row-odd',
+            selectedTableRow: 'table-row-selected',
+            hoverTableRow: 'table-row-hover',
+            headerCell: 'table-header-cell',
+            tableCell: 'table-cell'
+        }
+    });
+}
+</script>
+{% endblock %}
+
+{% block season_selector %}
+<div class="year_select_nav">
+    <label>Season:</label>
+    <select name="season_select" onchange="location = this.value;">
+        <option value="{{url_for('index')}}">2025-26</option>
+        <option selected="selected" value="{{url_for('index_24_25')}}">2024-25</option>
+        <option value="{{url_for('index_23_24')}}">2023-24</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="table_div"></div>
+{% endblock %}
+
+{% block glossary %}
+<section class="glossary">
+    <h4>Glossary</h4>
+    <ul>
+        <li class="glossary_list"><b>Ranking (WP):</b> Predicted final results for O/U competition based on current team win%.</li>
+        <li class="glossary_list"><b>Ranking (PD):</b> Predicted final results for O/U competition based on current point differentials.</li>
+        <li class="glossary_list"><b>Predictions (WP):</b> Predicted number of O/U predictions correct based on current team win%.</li>
+        <li class="glossary_list"><b>Predictions (PD):</b> Predicted number of O/U predictions correct based on current team point differentials.</li>
+        <li class="glossary_list"><b>Bonus Points (WP):</b> Predicted number of "Bonus" O/U predictions correct based on current team win%.</li>
+        <li class="glossary_list"><b>Bonus Points (PD):</b> Predicted number of "Bonus" O/U predictions correct based on current team point differentials.</li>
+        <li class="glossary_list"><b>Total Points (WP):</b> Predicted number of total O/U predictions correct based on current team win%.</li>
+        <li class="glossary_list"><b>Total Points (PD):</b> Predicted number of total O/U predictions correct based on current team point differentials.</li>
+    </ul>
+</section>
+{% endblock %}
