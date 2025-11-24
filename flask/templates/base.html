@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W0CQ9GZX2G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-W0CQ9GZX2G');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NBA Over-Unders{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    {% block page_scripts %}{% endblock %}
+</head>
+<body>
+    {% block header %}
+    <header>
+        <h1 class="header">NBA Over-Unders</h1>
+        <p class="sub-header">Tracking Kyle's NBA Over-Under Pool along with each NBA team's progress towards its Vegas Over-Under Line</p>
+        {% block season_selector %}{% endblock %}
+    </header>
+    {% endblock %}
+    
+    {% block nav %}
+    <nav class="redirect">
+        <a href="{{url_for('index')}}">O/U Standings</a>
+        <a href="{{url_for('index_team_table')}}">Team Tracker</a>
+        <a href="{{url_for('index_entry_table')}}">Entries</a>
+    </nav>
+    {% endblock %}
+    
+    {% block content %}{% endblock %}
+    
+    {% block glossary %}{% endblock %}
+    
+    {% block footer %}
+    <footer class="footer">
+        <p>Last Updated: {{ context.update_date | safe }}</p>
+    </footer>
+    {% endblock %}
+</body>
+</html>
+
