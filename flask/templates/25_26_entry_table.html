@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}NBA Over-Unders | Entries 2025-26{% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
+
+  function drawTable() {
+    var table = new google.visualization.Table(document.getElementById('table_div'));
+    var json_data = new google.visualization.DataTable({{ table|safe }});
+    
+    table.draw(json_data, {
+        showRowNumber: true, 
+        sortColumn: 1, 
+        sortAscending: true, 
+        height: '100%',
+        cssClassNames: {
+            headerRow: 'table-header',
+            tableRow: 'table-row',
+            oddTableRow: 'table-row-odd',
+            selectedTableRow: 'table-row-selected',
+            hoverTableRow: 'table-row-hover',
+            headerCell: 'table-header-cell',
+            tableCell: 'table-cell'
+        }
+    });
+}
+</script>
+{% endblock %}
+
+{% block season_selector %}
+<div class="year_select_nav">
+    <label>Season:</label>
+    <select name="season_select" onchange="location = this.value;">
+        <option value="{{url_for('index_entry_table')}}">2026-27</option>
+        <option selected="selected" value="{{url_for('index_entry_table_25_26')}}">2025-26</option>
+        <option value="{{url_for('index_entry_table_24_25')}}">2024-25</option>
+        <option value="{{url_for('index_entry_table_23_24')}}">2023-24</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="table_div"></div>
+{% endblock %}

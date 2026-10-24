@@ -275,8 +275,10 @@ def main(team_tracker_template, ou_picks, tab1, tab2, tab3):
             df_row = pd.DataFrame({'Full name':name,'TEAM':selected_team,'Pick':ou_pick},index=[0])
             moneyball_df = pd.concat([moneyball_df,df_row])
 
-        moneyball_df = pd.merge(moneyball_df,predictions_rename[['TEAM',winp_or_pointdiff]],on='TEAM',how='inner')
-        
+        # left join: early-season CTG sometimes omits a team; don't drop entrants
+        moneyball_df = pd.merge(moneyball_df, predictions_rename[['TEAM', winp_or_pointdiff]], on='TEAM', how='left')
+        moneyball_df[winp_or_pointdiff] = moneyball_df[winp_or_pointdiff].fillna('')
+
         if big_or_small == 'Big':
             moneyball_df[output_column] = np.where(moneyball_df['Pick'] == moneyball_df[winp_or_pointdiff],3.5,0)
         elif big_or_small == 'Small':
@@ -369,15 +371,21 @@ def main(team_tracker_template, ou_picks, tab1, tab2, tab3):
 
 def lambda_handler(event, context):
 
-    bucket.download_file('23_24_team_tracker_template.csv','/tmp/23_24_team_tracker_template.csv')
-    bucket.download_file('23_24_ou_picks.csv','/tmp/23_24_ou_picks.csv')
-    
-    main('/tmp/23_24_team_tracker_template.csv', '/tmp/23_24_ou_picks.csv','/tmp/tab1_prep_results_winner_final.csv','/tmp/tab2_team_tracker_results.csv','/tmp/tab3_ou_picks_for_tab.csv')
+    bucket.download_file('26_27_team_tracker_template.csv', '/tmp/26_27_team_tracker_template.csv')
+    bucket.download_file('26_27_ou_picks.csv', '/tmp/26_27_ou_picks.csv')
+
+    main(
+        '/tmp/26_27_team_tracker_template.csv',
+        '/tmp/26_27_ou_picks.csv',
+        '/tmp/tab1_prep_results_winner_final.csv',
+        '/tmp/tab2_team_tracker_results.csv',
+        '/tmp/tab3_ou_picks_for_tab.csv',
+    )
 
     bucket.upload_file('/tmp/tab1_prep_results_winner_final.csv', 'tab1_prep_results_winner_final.csv')
     bucket.upload_file('/tmp/tab2_team_tracker_results.csv', 'tab2_team_tracker_results.csv')
     bucket.upload_file('/tmp/tab3_ou_picks_for_tab.csv', 'tab3_ou_picks_for_tab.csv')
-    
+
     return {
         'message': 'CTG Download + Data Update = Success'
     }
